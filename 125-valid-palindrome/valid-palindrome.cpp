@@ -1,12 +1,22 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        s.erase(remove_if(s.begin(), s.end(), [](char c) { return !isalnum(c); }), s.end());
-        transform(s.begin(), s.end(), s.begin(), ::tolower);
-
-        string p = s; 
-        reverse(p.begin(), p.end()); 
-        cout << p;
-        return (s == p); 
+        int left = 0 ,right = s.length()-1;
+        while (left<right){
+            if(!isalnum(s[left])){
+                left ++;
+            }
+            else if(!isalnum(s[right])){
+                right --;
+            }
+            else if(tolower(s[left]) != tolower(s[right])){
+                return false;
+            }
+            else{
+                left++;
+                right--;
+            }
+        }
+        return true;
     }
 };
