@@ -9,42 +9,39 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
-    unordered_map<int, vector<int>> g;
 
+class Solution {
+private:
+    int maxDistance = 0;
+
+public:
     int amountOfTime(TreeNode* root, int start) {
-        dfs(root);
-        queue<int> q{{start}};
-        unordered_set<int> vis;
-        int ans = -1;
-        while (q.size()) {
-            ++ans;
-            for (int n = q.size(); n; --n) {
-                int i = q.front();
-                q.pop();
-                vis.insert(i);
-                for (int j : g[i]) {
-                    if (!vis.count(j)) {
-                        q.push(j);
-                    }
-                }
-            }
-        }
-        return ans;
+        traverse(root, start);
+        return maxDistance;
     }
 
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        if (root->left) {
-            g[root->val].push_back(root->left->val);
-            g[root->left->val].push_back(root->val);
+    int traverse(TreeNode* root, int start) {
+        int depth = 0;
+        if (root == nullptr) {
+            return depth;
         }
-        if (root->right) {
-            g[root->val].push_back(root->right->val);
-            g[root->right->val].push_back(root->val);
+
+        int leftDepth = traverse(root->left, start);
+        int rightDepth = traverse(root->right, start);
+
+        if (root->val == start) {
+            maxDistance = max(leftDepth, rightDepth);
+            depth = -1;
+        } 
+        else if (leftDepth >= 0 && rightDepth >= 0) {
+            depth = max(leftDepth, rightDepth) + 1;
+        } 
+        else {
+            int distance = abs(leftDepth) + abs(rightDepth);
+            maxDistance = max(maxDistance, distance);
+            depth = min(leftDepth, rightDepth) - 1;
         }
-        dfs(root->left);
-        dfs(root->right);
+
+        return depth;
     }
 };
