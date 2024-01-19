@@ -2,31 +2,27 @@ class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int n = matrix.size();
-        int mid = 0,left = 0, right =0;
-        for (int r = 1;r<n;r++){
-            for (int c =0;c<n;c++){
-                mid = matrix[r-1][c];
-                if (c >0) {
-                    left = matrix[r-1][c-1];
-                }
-                else{
-                    left = INT_MAX;
-                }
-                if (c<n-1){
-                    right = matrix[r-1][c+1];
-                }
-                else{
-                    right = INT_MAX;
-                }
-                matrix[r][c] += min({left,right,mid});
+        vector<vector<int>> dp(n, vector<int> (n, -1));
+        for(int i=0;i<n;i++){
+            dp[n-1][i] = matrix[n-1][i];
+        }
+        for(int row=n-2 ;row>=0;row--){
+            for (int col = 0;col<n;col++){
+                //down
+                int down = matrix[row][col] + dp[row+1][col];
+                //left
+                int left = matrix[row][col] + (col-1 <0 ? 1e9 :dp[row+1][col-1]);   
+                //right
+                int right = matrix[row][col] + (col +1 >=n ? 1e9 :dp[row+1][col+1]);   
+                //min of three;
+                dp[row][col] = min({left,down,right});
 
             }
         }
-        int min_value = INT_MAX;
-        for (int i = 0; i < n; i++) {
-            min_value = min(min_value, matrix[n - 1][i]);
+        int mini = INT_MAX;
+        for(int i =0;i<n;i++){
+            mini = min(mini,dp[0][i]);
         }
-        return min_value;
-
-    }
+        return mini;
+    }        
 };
