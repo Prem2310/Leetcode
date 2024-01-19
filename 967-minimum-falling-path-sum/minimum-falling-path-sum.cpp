@@ -15,7 +15,7 @@ public:
                 //right
                 int right = matrix[row][col] + (col +1 >=n ? 1e9 :dp[row+1][col+1]);   
                 //min of three;
-                dp[row][col] = min({left,down,right});
+                dp[row][col] = min(down, min(left, right));
 
             }
         }
