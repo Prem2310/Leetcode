@@ -1,18 +1,10 @@
 class Solution {
 public:
     int singleNumber(std::vector<int>& nums) {
-        unordered_map<int, int> freq;
-        
-        for (int i = 0; i < nums.size(); ++i) {
-            freq[nums[i]]++;
+        int result = 0;
+        for(int i=0;i<nums.size();i++){
+            result = result ^ nums[i];
         }
-        
-        for (auto& entry : freq) {
-            if (entry.second == 1) {
-                return entry.first;
-            }
-        }
-        
-        return 0;
+        return result;
     }
 };
