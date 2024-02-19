@@ -6,7 +6,7 @@ public:
         if (n == 536870912){
             return true;
         }
-        if (n==0 || n <0){
+        if (n<=0){
             return false;
         }
         if((int)num == num){
