@@ -1,23 +1,26 @@
 class Solution {
 public:
-    int ncr(int n,int r){
-        long long res = 1;
-        for(int i=0;i<r;i++){
-            res *= (n-i);
-            res /= (i+1); 
+    vector<int> help(vector<int>& intital){
+        vector<int> ans;
+        ans.push_back(1);
+        for(int i = 0; i < intital.size()-1; ++i){
+            ans.push_back(intital[i]+intital[i+1]);
         }
-        return (int)res;
-    }
-    vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> ans;
-        for(int row = 1;row<=numRows;row++){
-            vector<int> tempList;
-            for(int col = 1; col<=row;col++){
-                tempList.push_back(ncr(row-1,col-1));
-            }
-            ans.push_back(tempList);
-        }
+        ans.push_back(1);
         return ans;
-        
+    }
+
+    vector<vector<int>> generate(int numRows) {
+        if(numRows == 1){
+            return {{1}};
+        }
+        vector<vector<int>> total;
+        total.push_back({1});
+        vector<int> temp = {1};
+        for(int i = 0; i < numRows-1; ++i){
+            temp = help(temp);
+            total.push_back(temp);
+        }
+        return total;
     }
 };
