@@ -1,32 +1,65 @@
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        vector<vector<int>> res;
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        set<vector<int>> resultSet; 
-        for (int i = 0; i < n - 3; ++i) {
-            for (int j = i + 1; j < n - 2; j++) {
-                int left = j + 1, right = n - 1;
-                while (left < right) {
-                    long long sum = static_cast<long long>(nums[i]) + nums[j] + nums[left] + nums[right];
-                    if (sum == target) {
-                        resultSet.insert({nums[i], nums[j], nums[left], nums[right]});
-                        left++;
-                        right--;
-                    } else if (sum < target) {
-                        left++;
-                    } else {
-                        right--;
+    vector<vector<int>> fourSum(vector<int>& v, int target) {
+
+        vector<vector<int>>ans;
+        sort(v.begin(), v.end());
+
+        int i,j,k,l;
+
+        int n = v.size();
+
+        long long int sum=0;
+
+        for(i=0;i<n;i++)
+        {
+            if(i>0 && v[i]==v[i-1])
+            continue;
+
+            for(j=i+1;j<n;j++)
+            {
+                if(j!=(i+1) && v[j]==v[j-1])
+                continue;
+
+                k = j+1;
+                l = n-1;
+
+                while(k<l)
+                {
+                    sum= v[i];
+                    sum+= v[j];
+                    sum+= v[k];
+                    sum+= v[l];
+                    
+
+                    if(sum==target)
+                    {
+                        vector<int>temp = {v[i], v[j], v[k], v[l]};
+
+                        ans.push_back(temp);
+
+                        k++;
+                        l--;
+
+                        while(k<l && v[k]==v[k-1])
+                        k++;
+
+                        while(k<l && v[l]==v[l+1])
+                        l--;
+                    }
+                    else if(sum<target)
+                    {
+                        k++;
+                    }
+                    else
+                    {
+                        l--;
                     }
                 }
             }
         }
 
-        for (auto& quad : resultSet) {
-            res.push_back(quad);
-        }
-
-        return res;
+        return ans;
+        
     }
 };
