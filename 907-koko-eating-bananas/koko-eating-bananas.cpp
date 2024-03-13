@@ -14,10 +14,10 @@ public:
             int m = (l + r) / 2, t = 0;
             for (int p : piles)
                 t += (p + m - 1) / m;
-            if (t > h)
-                l = m + 1;
-            else
+            if (t <= h)
                 r = m;
+            else
+                l = m + 1;
         }
         return l;
     }
