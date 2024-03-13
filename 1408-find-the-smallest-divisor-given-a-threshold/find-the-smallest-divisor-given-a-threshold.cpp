@@ -13,7 +13,7 @@ public:
             int mid = (l + r) / 2;
             int sum = 0;
             for(int it: nums){
-                sum += ceil((double)it/(double)mid);
+                sum += (it+mid-1)/mid;
             }
             cout <<sum<<endl;
             if(sum<=threshold){
