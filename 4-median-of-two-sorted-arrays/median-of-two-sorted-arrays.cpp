@@ -1,47 +1,39 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int n = nums1.size();
-        int m = nums2.size();
-        nums1.insert(nums1.end(), m, 0);
-        
-        int i = n-1;
-        int j = m-1;
-        int k = n + m -1;
-        
-        while(i>=0 && j>=0){
-            if (nums1[i]<nums2[j]){
-                nums1[k] = nums2[j];
-                k--;
-                j--; 
+        vector<int> A = nums1;
+        vector<int> B = nums2;
+
+        int total = nums1.size() + nums2.size();
+        int half = (total + 1) / 2; 
+
+        if (nums1.size() > nums2.size()) {
+            swap(A, B);
+        }
+
+        int l = 0, r = A.size();
+        while (l <= r) {
+            int i = (l + r) / 2;
+            int j = half - i;
+
+            int Aleft = (i > 0) ? A[i - 1] : INT_MIN;
+            int Aright = (i < A.size()) ? A[i] : INT_MAX;
+            int Bleft = (j > 0) ? B[j - 1] : INT_MIN;
+            int Bright = (j < B.size()) ? B[j] : INT_MAX;
+
+            if (Aleft <= Bright && Bleft <= Aright) {
+                if (total % 2) {
+                    return max(Aleft, Bleft);
+                } else {
+                    return (max(Aleft, Bleft) + min(Aright, Bright)) / 2.0;
+                }
+            } else if (Aleft > Bright) {
+                r = i - 1;
+            } else {
+                l = i + 1;
             }
-            else{
-                nums1[k] = nums1[i];
-                i--;
-                k--;
-            }
-        }
-        while(j>=0){
-            nums1[k] = nums2[j];
-            j--;
-            k--;
         }
 
-        for (int i : nums1){
-            cout << i << endl;
-        }
-
-        double ans = 0;
-        if ((n+m)%2 != 0){
-            int mid = ( n + m )/2;
-            ans = nums1[mid];
-        }
-        else{
-            int mid = (n+m)/2;
-            ans = (nums1[mid] + nums1[mid-1])/2.000;
-        }
-
-
-        return ans;
+        return -1; 
     }
 };
