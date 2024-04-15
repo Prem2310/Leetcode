@@ -16,7 +16,6 @@ public:
         ListNode* right = head;
         while(n>0 && right){
             right = right->next;
-            cout<<n<<endl;
             n--;
         }
 
