@@ -1,17 +1,17 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        int preSum = 0,count = 0;
-        map<int,int> mp;
+        int prefixSum = 0;
+        map<int , int> mp;
         mp[0] = 1;
+        int count = 0;
+        for(int n: nums){
+            prefixSum += n;
 
-        for(int i=0;i<nums.size();i++){
-            preSum += nums[i];
-
-            int remove = preSum - goal;
+            int remove = prefixSum - goal;
             count += mp[remove];
-            mp[preSum]++;
+            mp[prefixSum]++;
         }
-        return count;     
+        return count;
     }
 };
