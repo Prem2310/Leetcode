@@ -1,17 +1,16 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        int curr = 0;
-        unordered_map<int, int> hashMap;
-        for (int i = 0; i < nums.size(); i++) {
-            curr = target - nums[i];
-            if (hashMap.find(curr) != hashMap.end()) {
-                return {hashMap[curr], i};
-            } else {
-                hashMap[nums[i]] = i;
+        unordered_map<int,int> mp;
+        for(int i = 0; i < nums.size() ; i++ ){
+            int curr = target - nums[i];
+            if(mp.find(curr) != mp.end()){
+                return {mp[curr],i};
+            }
+            else{
+                mp[nums[i]] = i;
             }
         }
-        // Return an empty vector if no solution is found
         return {};
     }
 };
