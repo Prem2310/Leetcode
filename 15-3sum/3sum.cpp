@@ -1,26 +1,31 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> res;
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
+        vector<vector <int> > res;
+        sort(nums.begin() , nums.end());
 
-        for (int i = 0; i < n - 2; ++i) {
-            if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+        for(int i = 0 ; i < nums.size()-2 ; i++){
+            if(i==0 || (i>0 && nums[i] != nums[i-1])){
                 int target = -nums[i];
-                int left = i + 1, right = n - 1;
-                while (left < right) {
-                    int sum = nums[left] + nums[right];
-                    if (sum == target) {
-                        res.push_back({nums[i], nums[left], nums[right]});
-                        while (left < right && nums[left] == nums[left + 1]) left++;
-                        while (left < right && nums[right] == nums[right - 1]) right--;
-                        left++;
-                        right--;
-                    } else if (sum < target) {
-                        left++;
-                    } else {
-                        right--;
+                int l = i+1;
+                int r = nums.size()-1;
+
+                while(l < r){
+                    int curr = nums[l] + nums[r];
+
+                    if(curr == target){
+                        res.push_back({nums[i],nums[l],nums[r]});
+                        while(l < r && nums[l] == nums[l + 1]) l++;
+                        while(l < r && nums[r]== nums[r - 1]) r--;
+                        l++;
+                        r--;
+                    }
+
+                    else if (curr > target){
+                        r--;
+                    }
+                    else{
+                        l++;
                     }
                 }
             }
