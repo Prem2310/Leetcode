@@ -1,10 +1,14 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        arr1 = list(s)
-        arr2 = list(t)
-        
-        arr1.sort()
-        arr2.sort()
-
-        return arr1==arr2
-
+        if len(s) != len(t):    
+            return False
+        arr = [0]*26
+        for c in s:
+            arr[ord(c) - ord('a')]+=1
+            
+        for c in t:
+            if arr[ord(c)-ord('a')] == 0: 
+                return False
+            arr[ord(c)-ord('a')]-=1
+            
+        return True
