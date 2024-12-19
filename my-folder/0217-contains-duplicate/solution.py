@@ -1,14 +1,8 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        nums.sort()
-        count = 0
-        for i in range(1,len(nums)):
-            if nums[i] == nums[i-1]:
-                count = 1
-            else:
-                continue
-        if count == 1:
-            return True
-        else:
-            return False
-
+        num_map = {}
+        for n in nums:
+            if n in num_map:
+                return True
+            num_map[n] = 1
+        return False
