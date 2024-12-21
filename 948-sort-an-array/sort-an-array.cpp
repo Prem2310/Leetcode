@@ -1,38 +1,37 @@
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
-        mergeSort(nums,0,nums.size()-1);
+        mergeSort(nums , 0 , nums.size()-1);
         return nums;
     }
-    void mergeSort(vector <int>& A,int l , int r){
-        if(l >= r){
-            return ;
-        }
-        const int m = ( l + r) / 2;
-        mergeSort(A , l , m);
-        mergeSort(A , m + 1 , r);
-        merge(A , l , m , r);
+    void mergeSort(vector<int> &nums ,int l , int r){
+        if (l >= r) return;
+        int mid = (l + r) / 2;
+        mergeSort(nums , l , mid);
+        mergeSort(nums , mid + 1 , r);
+        merge(nums , l , mid , r);
     }
-    void merge(vector <int>& A,int l ,int mid, int r){
-        vector<int> sorted(r-l+1);
-        int k = 0;
-        int i = l;
-        int j = mid + 1;
+    void merge(vector<int> &nums , int l, int mid , int r){
+        vector<int> temp;
+        int left = l ;
+        int right = mid + 1;
 
-        while (i <= mid && j <= r){
-            if(A[i] < A[j]){
-                sorted[k++] = A[i++];
+        while(left <=mid && right <= r){
+            if(nums[left] <=nums[right]){
+                temp.push_back(nums[left++]);
             }
             else{
-                sorted[k++] = A[j++];
+                temp.push_back(nums[right++]);
             }
         }
-        while (i<=mid){
-            sorted[k++]  = A[i++];
+
+        while(left <= mid){
+            temp.push_back(nums[left++]);
         }
-        while (j <= r){
-            sorted[k++]  = A[j++];
+        while(right <= r){
+            temp.push_back(nums[right++]);
         }
-        copy(sorted.begin(), sorted.end(), A.begin() + l);
+
+        copy(temp.begin() ,temp.end() , nums.begin() + l);
     }
 };
