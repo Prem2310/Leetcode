@@ -5,15 +5,20 @@ on:
   schedule:
     - cron: "0 8 * * *"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Sync
-        uses: joshcai/leetcode-sync@v1.5
+      - name: Sync Leetcode Problems
+        uses: joshcai/leetcode-sync@v1.7
         with:
           github-token: ${{ github.token }}
           leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
           leetcode-session: ${{ secrets.LEETCODE_SESSION }}
           destination-folder: my-folder
+          verbose: true
+          git-push: true
