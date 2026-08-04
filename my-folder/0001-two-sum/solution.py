@@ -4,7 +4,6 @@ class Solution:
         for i in range(len(nums)):
             curr = target - nums[i]
             if curr in numMap:
-                return [i,numMap[curr]]
-            numMap[nums[i]] = i            
-
+                return [i, numMap[curr]]
+            numMap[nums[i]] = i
         return -1
