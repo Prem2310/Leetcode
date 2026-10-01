@@ -8,8 +8,8 @@ class Solution:
         for i in range(n):
             res[i] *= prefix
             prefix *= nums[i]
-        for i in range(n-1,-1,-1):
-            res[i] *= sufix
-            sufix *= nums[i]
+        for j in range(n-1,-1,-1):
+            res[j] *= sufix
+            sufix *= nums[j]
 
         return res
